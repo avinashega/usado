@@ -18,6 +18,7 @@ var fs = require('fs'),
 	mongoStore = require('connect-mongo')({
 		session: session
 	}),
+    expressValidator = require('express-validator'),
 	flash = require('connect-flash'),
 	config = require('./config'),
 	consolidate = require('consolidate'),
@@ -80,6 +81,7 @@ module.exports = function(db) {
 		extended: true
 	}));
 	app.use(bodyParser.json());
+    
 	app.use(methodOverride());
 
 	// CookieParser should be above session
