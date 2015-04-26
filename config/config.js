@@ -71,6 +71,8 @@ module.exports.getJavaScriptAssets = function(includeTests) {
  * Get the modules CSS files
  */
 module.exports.getCSSAssets = function() {
+	console.log(this.assets.lib.css, this.assets.css);
 	var output = this.getGlobbedFiles(this.assets.lib.css.concat(this.assets.css), 'public/');
+	console.log(output);
 	return output;
 };
