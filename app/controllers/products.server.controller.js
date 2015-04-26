@@ -13,8 +13,21 @@ var mongoose = require('mongoose'),
  */
 exports.create = function(req, res) {
 	var product = new Product(req.body);
-	product.user = req.user;
-
+	product.createdBy = req.user.id;
+    req.assert('name', 'You must enter a name').notEmpty();
+    req.assert('category', 'You must enter a valid email address').notEmpty();
+    req.assert('quantity', 'Password must be between 8-20 characters long').notEmpty().isInt();
+    req.assert('price', 'You must enter a valid price').isInt();
+    req.assert('availableCity', 'You must enter a name').notEmpty().len(3,50);
+    req.assert('availableLocality', 'You must enter a valid email address').notEmpty().len(3,50);
+    req.assert('pickupAddress', 'Password must be between 8-20 characters long').notEmpty().len(10,500);
+    req.assert('description', 'Username cannot be more than 20 characters').len(50);
+    req.assert('monthsUsed', 'Passwords do not match').notEmpty().isInt();
+    req.assert('availableWarranty', 'You must enter a valid email address').notEmpty().isInt();
+    var errors = req.validationErrors();
+    if (errors) {
+        return res.status(400).send(errors);
+    }
 	product.save(function(err) {
 		if (err) {
 			return res.status(400).send({
